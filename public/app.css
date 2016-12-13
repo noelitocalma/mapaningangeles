@@ -1,10 +1,11 @@
 .app-container {
+  padding: 15px;
   height: 100%;
 }
 /* Always set the map height explicitly to define the size of the div
  * element that contains the map. */
 #map {
-  height: 100%;
+  height: calc(100% - 50px);
 }
 /* Optional: Makes the sample page fill the window. */
 html, body {
@@ -21,35 +22,4 @@ html, body {
   height: 32px;
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#input {
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  text-overflow: ellipsis;
-  width: 300px;
-}
-
-#pac-input:focus {
-  border-color: #4d90fe;
-}
-
-.pac-container {
-  font-family: Roboto;
-}
-
-#type-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  padding: 5px 11px 0px 11px;
-}
-
-#type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
-#target {
-  width: 345px;
 }

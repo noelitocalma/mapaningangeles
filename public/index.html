@@ -8,19 +8,28 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
     <div class="app-container">
-      <div class="dropdown">
-        <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Travel Info
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="distance">
+      <div>
+        <div class="input-group">
+          <input id="input" type="text" class="form-control" placeholder="Search Destination here">
+          <span class="input-group-btn">
+            <button class="btn btn-danger" id="clear" onclick="document.getElementById('input').value = ''" type="button">X</button>
+          </span>
+          <span class="input-group-btn">
+            <div class="dropdown text-xs-right">
+              <button class="btn btn-info dropdown-toggle text-xs-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Travel Info
+              </button>
+              <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownMenuButton" id="distance">
+              </div>
+            </div>
+          </span>
         </div>
       </div>
-      <input id="input" type="text" class="form-control" placeholder="Search Destination here">
-      <button id="clear" onclick="document.getElementById('input').value = ''" type="button">X</button>
       <div id="map"></div>
     </div>
 

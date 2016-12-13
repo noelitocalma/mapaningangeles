@@ -78,6 +78,59 @@ var mapStyles = [
     stylers: [{color: '#17263c'}]
   }
 ]
+function CenterControl(controlDiv, map, currentPosition) {
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.marginBottom = '22px';
+  controlUI.style.marginLeft = '10px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to recenter the map';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontSize = '20px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = '<i class="ion-pinpoint"></i>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener('click', function() {
+    map.setCenter(currentPosition);
+  });
+}
+
+function NavigateControl(controlDiv, map, destination) {
+  // Set CSS for the control border.
+  var controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.marginLeft = '10px';
+  controlUI.style.marginBottom = '5px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to navigate';
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  var controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontSize = '20px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = '<i class="ion-navigate"></i>';
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener('click', function() {
+    window.location = 'google.navigation:q' + destination.lat() + ',' + destination.lng()
+  });
+}
 
 function initMap() {
   if (navigator.geolocation) {
@@ -97,6 +150,15 @@ function initMap() {
         styles: mapStyles
       });
 
+      // Create the DIV to hold the control and call the CenterControl()
+      // constructor passing in this DIV.
+      var centerControlDiv = document.createElement('div');
+      var navigateControlDiv = document.createElement('div');
+      var centerControl = new CenterControl(centerControlDiv, map, currentPosition);
+
+      centerControlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(centerControlDiv);
+
       var marker = new google.maps.Marker({
         position: currentPosition,
         map: map,
@@ -111,7 +173,7 @@ function initMap() {
       // Create the search box and link it to the UI element.
       var input = document.getElementById('input');
       var searchBox = new google.maps.places.SearchBox(input);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+      // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
       // Bias the SearchBox results towards current map's viewport.
       map.addListener('bounds_changed', function() {
@@ -143,6 +205,9 @@ function initMap() {
             if (status == 'OK') {
               // Display the route on the map.
               directionsDisplay.setDirections(response);
+              var navigateControl = new NavigateControl(navigateControlDiv, map, destination);
+              navigateControl.index = 1;
+              map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(navigateControlDiv);
             }
           });
 
